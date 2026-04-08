@@ -7,7 +7,7 @@ A personal collection of Claude Code skills built by Masha Zolkipli.
 ### `/daily-checklist-masha`
 Masha's personalized morning briefing. Pulls live data from Google Calendar, HubSpot, and Jira to start the day with full context.
 
-### `/response-draft`
+### `/cs-response-draft`
 Draft a customer support response for a ticket or request from HubSpot, Jira, or Slack.
 
 ## How to Use
