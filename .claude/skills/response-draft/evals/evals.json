@@ -1,0 +1,43 @@
+{
+  "skill_name": "response-draft",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "eval-payroll-calculation",
+      "prompt": "A customer just messaged saying their employee's salary for March looks wrong — they expected 3,500 MYR but the payroll shows 3,200 MYR. They're asking why. Draft me a response.",
+      "expected_output": "An empathetic, clear draft response that: (1) acknowledges the customer's concern, (2) explains possible reasons for the discrepancy (pro-rating, deductions, allowances), (3) asks for or references next steps to investigate, (4) includes a help center link if available, (5) closes warmly. Should include an issue summary and sources used.",
+      "assertions": [
+        {"name": "has_issue_summary", "type": "contains", "value": "Issue summary"},
+        {"name": "has_sources_section", "type": "contains", "value": "Sources used"},
+        {"name": "has_draft_response", "type": "contains", "value": "Draft response"},
+        {"name": "empathetic_opening", "type": "llm_judge", "value": "The draft response opens with acknowledgment or empathy toward the customer before jumping to a solution"},
+        {"name": "no_jargon", "type": "llm_judge", "value": "The response avoids technical jargon and is understandable to a non-technical reader"},
+        {"name": "has_next_steps", "type": "llm_judge", "value": "The response includes concrete next steps or a request for more information to investigate the discrepancy"}
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "eval-leave-balance",
+      "prompt": "Got a ticket from a client: their employee applied for annual leave but the system rejected it saying 'insufficient balance', but the employee says they have 10 days left. Help me respond.",
+      "expected_output": "A clear draft response that: (1) acknowledges the frustration, (2) explains possible reasons the system shows insufficient balance (e.g. pending approvals eating into balance, leave type mismatch, accrual not yet updated), (3) suggests steps to check/resolve, (4) references help center if relevant. Should include issue summary and sources.",
+      "assertions": [
+        {"name": "has_issue_summary", "type": "contains", "value": "Issue summary"},
+        {"name": "has_sources_section", "type": "contains", "value": "Sources used"},
+        {"name": "has_draft_response", "type": "contains", "value": "Draft response"},
+        {"name": "addresses_root_cause", "type": "llm_judge", "value": "The response explains at least one plausible reason why the system might show insufficient balance despite the employee believing they have days remaining"},
+        {"name": "actionable", "type": "llm_judge", "value": "The response gives the customer something concrete to check or do next"}
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "eval-vague-ticket",
+      "prompt": "Customer says 'the system is not working' — can you help me draft something back to them?",
+      "expected_output": "The skill should recognize this is too vague to answer directly and either: (a) ask the user one clarifying question before proceeding, OR (b) draft a response that asks the customer for more details (what feature, what error message, what they were trying to do). Should NOT make up a specific issue.",
+      "assertions": [
+        {"name": "handles_vagueness", "type": "llm_judge", "value": "The skill either asks the user a clarifying question before drafting, OR produces a draft that asks the customer for more specific information — it does not invent details about what is broken"},
+        {"name": "professional_tone", "type": "llm_judge", "value": "Whatever is produced maintains a professional and empathetic tone"},
+        {"name": "no_false_specifics", "type": "llm_judge", "value": "The response does not describe a specific bug or feature issue that was not mentioned in the original ticket"}
+      ]
+    }
+  ]
+}
